@@ -4,6 +4,8 @@ import { Grid } from "semantic-ui-react";
 import JobAd from '../pages/JobAd'
 import City from "../pages/City";
 import JobPosition from "../pages/JobPosition";
+import JobAdDetail from "../pages/JobAdDetail";
+import Employee from "../pages/Employee";
 
 
 export default function Dashboard() {
@@ -17,6 +19,9 @@ export default function Dashboard() {
           </Grid.Column>
           <Grid.Column width={12}>
           <Route exact path="/" component={JobAd} />
+          <Route exact path="/jobad" component={JobAd} />
+          <Route exact path="/employees" component={Employee} />
+          <Route exact path="/jobad/:id" component={JobAdDetail} />
             
           </Grid.Column>
         </Grid.Row>

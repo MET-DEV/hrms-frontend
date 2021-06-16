@@ -1,38 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "semantic-ui-react";
+import JobAddService from "../services/jobAdService";
+import { Link } from "react-router-dom";
+
 
 export default function JobAd() {
+  const[jobAdds,setJobAdd]=useState([])
+  useEffect(()=>{
+    let jobAddService=new JobAddService()
+    jobAddService.getJobAd().then(result=>setJobAdd(result.data.data))
+  },[])
   return (
     <div>
       <Table singleLine>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Registration Date</Table.HeaderCell>
-            <Table.HeaderCell>E-mail address</Table.HeaderCell>
-            <Table.HeaderCell>Premium Plan</Table.HeaderCell>
+          <Table.HeaderCell>Başlık</Table.HeaderCell>
+            <Table.HeaderCell>Şirket Adı</Table.HeaderCell>
+            
+            <Table.HeaderCell>Pozisyon</Table.HeaderCell>
+            <Table.HeaderCell>Max Maaş</Table.HeaderCell>
+            <Table.HeaderCell>Min Maaş</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          <Table.Row>
-            <Table.Cell>John Lilki</Table.Cell>
-            <Table.Cell>September 14, 2013</Table.Cell>
-            <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
-            <Table.Cell>No</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Jamie Harington</Table.Cell>
-            <Table.Cell>January 11, 2014</Table.Cell>
-            <Table.Cell>jamieharingonton@yahoo.com</Table.Cell>
-            <Table.Cell>Yes</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Jill Lewis</Table.Cell>
-            <Table.Cell>May 11, 2014</Table.Cell>
-            <Table.Cell>jilsewris22@yahoo.com</Table.Cell>
-            <Table.Cell>Yes</Table.Cell>
-          </Table.Row>
+          {jobAdds.map((jobAdd)=>
+            <Table.Row key={(jobAdd.id)}>
+            <Table.Cell><Link to={`/jobad/${jobAdd.employer.id}`}>{jobAdd.jobTitle}</Link></Table.Cell>
+            <Table.Cell>{(jobAdd.employer.name).toUpperCase()}</Table.Cell>
+            
+            <Table.Cell>{jobAdd.jobPosition.name}</Table.Cell>
+            <Table.Cell>{jobAdd.sallaryMax}</Table.Cell>
+            <Table.Cell>{jobAdd.sallaryMin}</Table.Cell>
+            </Table.Row>
+          )}
+          
+          
         </Table.Body>
       </Table>
     </div>
