@@ -4,6 +4,7 @@ import Navi from "../src/layouts/Navi";
 import { Container } from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css'
 
+
 function App() {
   return (
     <div className="App">

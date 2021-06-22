@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Form,FormGroup } from 'semantic-ui-react'
+import { Form} from 'semantic-ui-react'
 import CityService from '../services/cityService'
 
 export default function City() {
@@ -10,7 +10,7 @@ export default function City() {
     },[])
     return (
      <Form>
-          <Form.Group widths='equal'>
+          <Form.Group widths='equal'>&nbsp;&nbsp;&nbsp;
           <Form.Field label='Şehir' control='select'>
               {cities.map((city)=>
               

@@ -11,11 +11,11 @@ export default function JobPosition() {
     },[])
     return (
         <Form>
-          <Form.Group widths='equal'>
+          <Form.Group widths='equal'>&nbsp;&nbsp;
            
-            <Form.Field label='İş Pozisyonu' control='select'>
+            <Form.Field   label='İş Pozisyonu' style={{fontSize: '12px'}} control='select'>
                 {jobPositions.map((jobPosition)=>
-                    <option  value='jobposition'>{(jobPosition.name).toUpperCase()}</option>
+                    <option value='jobposition'>{(jobPosition.name).toUpperCase()}</option>
                 )}
                 
                 
