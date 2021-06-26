@@ -128,7 +128,7 @@ export default function JobAdadd() {
   };
   return (
     <div>
-      <Card centered>
+      <Card centered fluid>
         <Card.Content header="İş İlanı Ekleme" />
         <Card.Content>
           <Form onSubmit={formik.handleSubmit}>

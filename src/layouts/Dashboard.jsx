@@ -8,6 +8,7 @@ import JobAdDetail from "../pages/JobAdDetail";
 import Employee from "../pages/Employee";
 import EmployeesAdd from "../pages/EmployeesAdd";
 import JobAdadd from "../pages/JobAdadd";
+import PassiveJobAd from "../pages/PassiveJobAd"
 
 export default function Dashboard() {
   return (
@@ -25,6 +26,7 @@ export default function Dashboard() {
             <Route exact path="/jobad/:id" component={JobAdDetail} />
             <Route exact path="/employeeadd" component={EmployeesAdd} />
             <Route exact path="/jobadvad" component={JobAdadd} />
+            <Route exact path="/passivead" component={PassiveJobAd} />
           </Grid.Column>
         </Grid.Row>
       </Grid>
