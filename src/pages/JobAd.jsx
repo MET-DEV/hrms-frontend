@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "semantic-ui-react";
+import { Table,Button,Icon } from "semantic-ui-react";
 import JobAddService from "../services/jobAdService";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToFavori } from "../store/actions/favoriActions";
 
 export default function JobAd() {
   const [jobAdds, setJobAdd] = useState([]);
- 
+ const dispatch = useDispatch()
 
   useEffect(() => {
     let jobAddService = new JobAddService();
@@ -14,6 +16,9 @@ export default function JobAd() {
    
     jobAddService.getJobAdTrue().then((result) => setJobAdd(result.data.data));
   }, []);
+  const handleAddToFavori=(jobAdd)=>{
+    dispatch(addToFavori(jobAdd))
+  }
   return (
     <div>
       <Table singleLine>
@@ -30,6 +35,7 @@ export default function JobAd() {
 
         <Table.Body>
           {jobAdds.map((jobAdd) => (
+            
             <Table.Row key={jobAdd.id}>
               <Table.Cell>
                 <Link to={`/jobad/${jobAdd.employer&&jobAdd.id}`}>{jobAdd.jobTitle}</Link>
@@ -39,6 +45,12 @@ export default function JobAd() {
               <Table.Cell>{jobAdd.jobPosition && (jobAdd.jobPosition.name).toUpperCase()}</Table.Cell>
               <Table.Cell>{jobAdd.sallaryMax}</Table.Cell>
               <Table.Cell>{jobAdd.sallaryMin}</Table.Cell>
+              <Button onClick={()=>handleAddToFavori(jobAdd)} color="teal" icon labelPosition='left'>
+                <Icon name='favorite' />
+                Favorilerime Ekle
+              </Button>
+              
+              
             </Table.Row>
           ))}
         </Table.Body>

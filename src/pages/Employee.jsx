@@ -2,18 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Table } from "semantic-ui-react";
 import EmployeeService from "../services/employeeService";
 import EmployeeCvService from "../services/employeeCvService";
+import JobPositionService from "../services/jobPositionService";
 
 export default function Employee() {
   const [employees, setEmployees] = useState([]);
   const [employeeCv,setEmoloyeeCv]=useState([])
+  
   useEffect(() => {
+    
     let employeeCvService=new EmployeeCvService();
     let employeeService = new EmployeeService();
+    
     employeeCvService.getCv().then((result)=>setEmoloyeeCv(result.data.data))
     employeeService
       .getEmployees()
       .then((result) => setEmployees(result.data.data));
   },[]);
+
+ 
   return (
     <div>
       <Table celled selectable>
@@ -27,19 +33,19 @@ export default function Employee() {
         </Table.Header>
 
         <Table.Body>
-            {employees.map((employee)=>(
+            {employeeCv.map((employee)=>(
                 <Table.Row>
-                <Table.Cell><strong>{employee.firstName} {employee.lastName}</strong></Table.Cell>
+                <Table.Cell><strong>{employee.employee.firstName} {employee.employee.lastName}</strong></Table.Cell>
                 {employeeCv.map((employeeCv)=>(
-                    <Table.Cell>{employeeCv.languages.map((language)=>(
+                    <Table.Cell>{employeeCv.employee.languages.map((language)=>(
                       <strong> <p>Dil: {language.language}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Seviye: {language.languageLevel}</p></strong>
                        ))}</Table.Cell>
                 ))}
                 
                 
                 
-                <Table.Cell><strong>{employee.email}</strong></Table.Cell>
-                <Table.Cell><strong>{employee.yearOfBirth}</strong></Table.Cell>
+                <Table.Cell><strong>{employee.employee.email}</strong></Table.Cell>
+                <Table.Cell><strong>{employee.employee.yearOfBirth}</strong></Table.Cell>
               </Table.Row>
             ))}
           

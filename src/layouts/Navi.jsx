@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { useHistory,Link } from "react-router-dom";
-import {  Dropdown, Menu, Container } from "semantic-ui-react";
+import { useHistory,Link,NavLink } from "react-router-dom";
+import {  Dropdown, Menu, Container, Button,Icon } from "semantic-ui-react";
 import SignedOut from "./SignedOut";
 import SignedIn from "./SignedIn";
+import FavoriteAd from "./FavoriteAd";
+import { useSelector } from "react-redux";
+
+
 export default function Navi() {
+  const favoriteItems = useSelector(state => state.favori)
   const[isAuthenticated,setIsAuthenticated]=useState(true)
   const history=useHistory()
+  
   function handdleSignOut(){
     setIsAuthenticated(false)
     history.push("/")
@@ -21,15 +27,13 @@ export default function Navi() {
           <Link to="/employees"><Menu.Item name="Kisiler" /></Link>
 
           <Menu.Menu position="right">
-            <Dropdown item text="Language">
-                <Dropdown.Menu>
-                  <Dropdown.Item>English</Dropdown.Item>
-                  <Dropdown.Item>Russian</Dropdown.Item>
-                  <Dropdown.Item>Spanish</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+            <FavoriteAd/>
               {isAuthenticated?<SignedIn signOut={handdleSignOut} />
               :<SignedOut signIn={handdleSignIn}/>}  
+              <Menu.Item>
+                <Button as={NavLink} to="/jobadvad" color="green"><Icon color="white" name="address card"/> İlan Ekle</Button>
+              </Menu.Item>
+              
           </Menu.Menu>
         </Container>
       </Menu>

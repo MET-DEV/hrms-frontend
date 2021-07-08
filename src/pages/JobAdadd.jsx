@@ -14,6 +14,7 @@ import {
 import CityService from "../services/cityService";
 import JobPositionService from "../services/jobPositionService";
 import WorkTypeService from "../services/workTypeService";
+import { toast } from "react-toastify";
 
 
 export default function JobAdadd() {
@@ -42,7 +43,7 @@ export default function JobAdadd() {
       .min(0, "0 Dan az olamaz")
       .required("Alan boş bırakılamaz"),
   });
-
+ 
   const formik = useFormik({
     
     initialValues: {
@@ -80,6 +81,12 @@ export default function JobAdadd() {
       }
       console.log(newJobAdd)
       jobAdService.add(newJobAdd).then((result)=>console.log(result.message))
+      toast.success("İlan pasif bir şekilde sistemimize eklendi. Personelimiz İnceleyecektir")
+      setTimeout(() => { window.location.reload() }, 4300);
+     
+
+      
+
       
       
     },
@@ -123,6 +130,7 @@ export default function JobAdadd() {
 
   const handleChangeSemantic = (value, fieldName) => {
     formik.setFieldValue(fieldName, value);
+    
     
     
   };
