@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import JobAdService from "../services/jobAdService";
-import { Header, Icon, Table } from "semantic-ui-react";
+import { Header, Icon,Label, Table } from "semantic-ui-react";
 
 export default function JobAdDetail() {
   let { id } = useParams();
@@ -13,12 +13,12 @@ export default function JobAdDetail() {
   return (
     <div>
        
-      <Header as="h2" icon textAlign="center">
+      <Header  as="h2" icon textAlign="center">
         <Icon name="users" circular />
-        <Header.Content>{jobAd.employer && (jobAd.employer.name).toUpperCase()}</Header.Content>
+        <Header.Content><Label size="huge" color="purple">{jobAd.employer && (jobAd.employer.name).toUpperCase()}</Label> </Header.Content>
         
       </Header>
-      <Header as='h3'>{jobAd.jobTitle}</Header>
+      <Header as='h3'><Label size="big" color="green">{jobAd.jobTitle}</Label></Header>
 
       <Table fixed>
     <Table.Header>

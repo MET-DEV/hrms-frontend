@@ -3,13 +3,15 @@ import React from "react";
 import * as Yup from "yup";
 import {
   Button,
-  Dropdown,
+  Label,
   Input,
   TextArea,
   Card,
   Form,
   Grid,
 } from "semantic-ui-react";
+import ExperienceService from "../services/experienceService"
+import { toast } from "react-toastify";
 
 export default function ExperienceAdd() {
   const experienceSchema = Yup.object().shape({
@@ -34,7 +36,11 @@ export default function ExperienceAdd() {
         startYear: values.startYear,
         where: values.where,
       };
-      console.log(experience);
+      let experienceService=new ExperienceService()
+      let employeeId=1
+      experienceService.add(experience,employeeId)
+      toast.success("Dil Eklendi")
+      setTimeout(() => { window.location.reload() }, 4300);
     },
   });
   const handleChangeSemantic = (value, fieldName) => {
@@ -44,11 +50,11 @@ export default function ExperienceAdd() {
   return (
     <div>
       <Card centered fluid>
-        <Card.Content header="Tecrübe Ekle" />
+      <Card.Content><Label color="teal" size="huge">Tecrübe Ekle</Label></Card.Content>
         <Card.Content>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Field>
-              <label>Nerede</label>
+            <Label color="blue" size="large">Nerede</Label>
               <Input
                 selection
                 placeholder="Tecrübe yeri"
@@ -65,7 +71,7 @@ export default function ExperienceAdd() {
             <Form.Field>
               <Grid stackable>
                 <Grid.Column width={8}>
-                  <label>Başlangıç yılı</label>
+                <Label color="blue" size="large">Başlangıç Yılı</Label>
                   <Input
                   onBlur={formik.onBlur}
                     
@@ -78,7 +84,7 @@ export default function ExperienceAdd() {
                   />
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <label>Bitiş yılı</label>
+                  <Label color="orange" size="large">Bitiş yılı</Label>
                   <Input
                   onBlur={formik.onBlur}
                     type="number"
@@ -95,7 +101,7 @@ export default function ExperienceAdd() {
             <Form.Field>
               <Grid stackable>
               <Grid.Column width={16}>
-              <label>Açıklama</label>
+              <Label color="purple" size="large">Açıklama</Label>
                   <TextArea
                   
                   

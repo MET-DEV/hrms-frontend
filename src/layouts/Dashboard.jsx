@@ -6,12 +6,17 @@ import City from "../pages/City";
 import JobPosition from "../pages/JobPosition";
 import JobAdDetail from "../pages/JobAdDetail";
 import Employee from "../pages/Employee";
-import EmployeesAdd from "../pages/EmployeesAdd";
 import JobAdadd from "../pages/JobAdadd";
 import PassiveJobAd from "../pages/PassiveJobAd"
 import EmployeeAdd from "../pages/EmployeeAdd";
 import { ToastContainer } from "react-toastify";
 import ExperienceAdd from "../pages/ExperienceAdd";
+import HeaderAdd from "../pages/HeaderAdd";
+import LanguageAdd from "../pages/LanguageAdd";
+import EducationAdd from "../pages/EducationAdd";
+import TechnologyAdd from "../pages/TechnologyAdd";
+import CvAdd from "../pages/CvAdd";
+import EmployeeCv from "../pages/EmployeeCv";
 
 export default function Dashboard() {
   return (
@@ -30,10 +35,18 @@ export default function Dashboard() {
             <Route exact path="/jobad" component={JobAd} />
             <Route exact path="/employees" component={Employee} />
             <Route exact path="/jobad/:id" component={JobAdDetail} />
+            <Route exact path="/cv/:id" component={EmployeeCv} />
             <Route exact path="/employeeadd" component={EmployeeAdd} />
             <Route exact path="/jobadvad" component={JobAdadd} />
             <Route exact path="/passivead" component={PassiveJobAd} />
             <Route exact path="/experience" component={ExperienceAdd} />
+            <Route exact path="/header" component={HeaderAdd} />
+            <Route exact path="/language" component={LanguageAdd} />
+            <Route exact path="/education" component={EducationAdd} />
+            <Route exact path="/tech" component={TechnologyAdd} />
+            <Route exact path="/cvadd" component={CvAdd} />
+            
+
           </Grid.Column>
         </Grid.Row>
       </Grid>

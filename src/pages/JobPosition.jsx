@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Form } from 'semantic-ui-react'
+import { Form,Label } from 'semantic-ui-react'
 import JobPositionService from '../services/jobPositionService'
 
 export default function JobPosition() {
@@ -11,9 +11,10 @@ export default function JobPosition() {
     },[])
     return (
         <Form>
+            <Label color="blue" size="large">İş Pozisyonları</Label>
           <Form.Group widths='equal'>&nbsp;&nbsp;
-           
-            <Form.Field   label='İş Pozisyonu' style={{fontSize: '12px'}} control='select'>
+          
+            <Form.Field   label='' style={{fontSize: '12px'}} control='select'>
                 {jobPositions.map((jobPosition)=>
                     <option value='jobposition'>{(jobPosition.name).toUpperCase()}</option>
                 )}
