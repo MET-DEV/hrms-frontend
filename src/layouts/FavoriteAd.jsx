@@ -18,7 +18,7 @@ export default function FavoriteAd() {
                   ))
                 }
                 <Dropdown.Divider/>
-                <Dropdown.Item as={NavLink} to="/favori">Sepete git</Dropdown.Item>
+                <Dropdown.Item as={NavLink} to="/favori">Favori İlanlara Git</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
         </div>

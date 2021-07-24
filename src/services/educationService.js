@@ -5,4 +5,8 @@ export default class EducationService{
         axios.post("http://localhost:8080/api/education/add="+employeeId,education)
 
     }
+    delete(education){
+        axios.post("http://localhost:8080/api/education/delete",education)
+
+    }
 }

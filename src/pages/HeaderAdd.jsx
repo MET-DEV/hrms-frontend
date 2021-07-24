@@ -28,7 +28,7 @@ export default function HeaderAdd() {
               let cvService=new CvHeaderService()
               let employeeId=1
               cvService.add(cvHeader,employeeId)
-              toast.success("Dil Eklendi")
+              toast.success("Ön yazı eklendi")
               setTimeout(() => { window.location.reload() }, 4300);
         }
         

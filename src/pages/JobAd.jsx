@@ -1,24 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { Table,Button,Icon } from "semantic-ui-react";
+import { Table,Button,Icon,Pagination,Dropdown } from "semantic-ui-react";
 import JobAddService from "../services/jobAdService";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToFavori } from "../store/actions/favoriActions";
 
 export default function JobAd() {
+  let [activePage, setActivePage] = useState(1);
+  let [pageSize, setPageSize] = useState(10);
+  let [totalPageSize, setTotalPageSize] = useState(0);
   const [jobAdds, setJobAdd] = useState([]);
  const dispatch = useDispatch()
+ let {cityId}=useParams()
+ let {workTypeId}=useParams()
+ let {jobPositionId}=useParams()
+ 
 
   useEffect(() => {
     let jobAddService = new JobAddService();
-    
+   
+    let newFilter={
+      cityId:cityId,
+      workTypeId:workTypeId,
+      jobPositionId:jobPositionId
+    }
     
    
-    jobAddService.getJobAdTrue().then((result) => setJobAdd(result.data.data));
-  }, []);
+    jobAddService.getFilterJobAd(activePage,pageSize,newFilter).then((result) => {setJobAdd(result.data.data); setTotalPageSize(parseInt(result.data.message))  })
+  }, [activePage,pageSize]);
+  const handlePaginationChange = (e, { activePage }) => {
+    setActivePage(activePage);
+  }
   const handleAddToFavori=(jobAdd)=>{
     dispatch(addToFavori(jobAdd))
   }
+  const handlePaginationSizeChange = (value) => {
+    setPageSize(value);
+  }
+  const paginationOptions = [
+    
+    { key:10, text: "10 İlan", value: 10 },
+    { key:25, text: "25 İlan", value: 25 },
+    { key:50, text: "50 İlan", value: 50 },
+    { key:100, text: "100 İlan", value: 100 },
+  ];
   return (
     <div>
       <Table singleLine>
@@ -30,6 +55,7 @@ export default function JobAd() {
             <Table.HeaderCell>Pozisyon</Table.HeaderCell>
             <Table.HeaderCell>Max Maaş</Table.HeaderCell>
             <Table.HeaderCell>Min Maaş</Table.HeaderCell>
+            <Table.HeaderCell>Favorilerime Ekle</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -55,6 +81,28 @@ export default function JobAd() {
           ))}
         </Table.Body>
       </Table>
+      <div>
+      <Pagination
+        firstItem={null}
+        lastItem={null}
+        activePage={activePage}
+        onPageChange={handlePaginationChange}
+        totalPages={Math.ceil(totalPageSize / pageSize)}
+      />
+
+      <Dropdown
+          onChange={(e, data) => {
+            setActivePage(1)
+            setPageSize(data.value);
+            handlePaginationSizeChange(data.value);
+          }}
+          selection
+          defaultValue={pageSize}
+          text={"Sayfalama - " + pageSize}
+          style={{ float: "right" }}
+          options={paginationOptions}
+      />
+      </div>
     </div>
   );
 }

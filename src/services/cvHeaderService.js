@@ -2,6 +2,6 @@ import axios from "axios";
 
 export default class CvHeaderService{
     add(cvHeader,employeeId){
-        return axios.post("http://localhost:8080/api/cvheader/add="+employeeId,cvHeader)
+        return axios.post("http://localhost:8080/api/cvheader/add?employeeId="+employeeId,cvHeader)
     }
 }

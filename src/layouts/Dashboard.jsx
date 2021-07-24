@@ -17,6 +17,10 @@ import EducationAdd from "../pages/EducationAdd";
 import TechnologyAdd from "../pages/TechnologyAdd";
 import CvAdd from "../pages/CvAdd";
 import EmployeeCv from "../pages/EmployeeCv";
+import FilterPage from "../pages/FilterPage";
+import LoginEmployeeCv from "../pages/LoginEmployeeCv";
+import HrmsStaffAdd from "../pages/HrmsStaffAdd";
+import HrmsStaffPage from "../pages/HrmsStaffPage";
 
 export default function Dashboard() {
   return (
@@ -26,13 +30,13 @@ export default function Dashboard() {
       
       <Grid>
         <Grid.Row>
-          <Grid.Column className="eight column row" width={3}>
-           <City />
-            <JobPosition />
+          <Grid.Column className="eight column row" width={3}style={{ marginLeft: "2px" }}>
+           <FilterPage  />
           </Grid.Column >
           <Grid.Column width={12}>
             <Route exact path="/" component={JobAd} />
             <Route exact path="/jobad" component={JobAd} />
+            <Route exact path="/jobad/:cityId/:jobPositionId/:workTypeId" component={JobAd} />
             <Route exact path="/employees" component={Employee} />
             <Route exact path="/jobad/:id" component={JobAdDetail} />
             <Route exact path="/cv/:id" component={EmployeeCv} />
@@ -45,6 +49,9 @@ export default function Dashboard() {
             <Route exact path="/education" component={EducationAdd} />
             <Route exact path="/tech" component={TechnologyAdd} />
             <Route exact path="/cvadd" component={CvAdd} />
+            <Route exact path="/mycv" component={LoginEmployeeCv} />
+            <Route exact path="/staff/add" component={HrmsStaffAdd} />
+            <Route exact path="/staffs" component={HrmsStaffPage} />
             
 
           </Grid.Column>
