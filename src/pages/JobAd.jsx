@@ -98,7 +98,7 @@ export default function JobAd() {
           }}
           selection
           defaultValue={pageSize}
-          text={"Sayfalama - " + pageSize}
+          text={"İlan Sayısı - " + pageSize}
           style={{ float: "right" }}
           options={paginationOptions}
       />
