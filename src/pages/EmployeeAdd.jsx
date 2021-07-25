@@ -13,6 +13,7 @@ import {
   Label,
 } from "semantic-ui-react";
 import { toast } from "react-toastify";
+import EmployeeService from "../services/employeeService";
 
 export default function EmployeeAdd() {
   const employeeAddSchema = Yup.object().shape({
@@ -52,6 +53,8 @@ export default function EmployeeAdd() {
         yearOfBirth: values.yearOfBirth,
       };
       console.log(newEmployee);
+      let employeeService=new EmployeeService()
+      employeeService.add(newEmployee)
       toast.success(values.firstName+" Kişisi Eklendi")
       setTimeout(() => { window.location.reload() }, 4300);
     },
