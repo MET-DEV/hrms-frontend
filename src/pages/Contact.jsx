@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import ContactService from '../services/contactService';
 import { toast } from 'react-toastify';
 export default function Contact() {
+  //commit test
     const contactSchema=Yup.object({
         linkedinAddress:Yup.string().required(),
         githubAddress:Yup.string().required()
