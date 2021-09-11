@@ -39,7 +39,7 @@ export default function ExperienceAdd() {
       let experienceService=new ExperienceService()
       let employeeId=1
       experienceService.add(experience,employeeId)
-      toast.success("Dil Eklendi")
+      toast.success("Tecrübe eklendi")
       setTimeout(() => { window.location.reload() }, 4300);
     },
   });

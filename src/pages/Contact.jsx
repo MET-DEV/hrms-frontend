@@ -30,8 +30,9 @@ const formik=useFormik({
         }
           let contactService=new ContactService()
           let employeeId=1
-          console.log(contact)
+          contactService.add(contact,employeeId)
           toast.success("Bağlantılar Eklendi")
+          setTimeout(() => { window.location.reload() }, 4300);
          
     }
     

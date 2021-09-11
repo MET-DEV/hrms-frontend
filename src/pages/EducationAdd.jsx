@@ -36,8 +36,8 @@ export default function EducationAdd() {
             let educationService=new EducationService()
             let employeeId=1
             educationService.add(newEducation,employeeId)
-            toast.success("Dil Eklendi")
-            setTimeout(() => { window.location.reload() }, 4300);
+            toast.success("Eğitim bilgisi eklendi")
+            
         }
         
     })

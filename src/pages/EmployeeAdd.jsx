@@ -1,22 +1,20 @@
-import { useFormik } from "formik";
+import { Formik,Form } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import JobPositionService from "../services/jobPositionService";
 import {
+  Icon,
   Button,
-  Dropdown,
-  Input,
-
   Card,
-  Form,
-
-  Label,
+  CardContent,
 } from "semantic-ui-react";
+import HRMSTextInput from "../utilities/customFormControls/HRMSTextInput";
 import { toast } from "react-toastify";
 import EmployeeService from "../services/employeeService";
+import HRMSSelect from "../utilities/customFormControls/HRMSSelect";
 
 export default function EmployeeAdd() {
-  const employeeAddSchema = Yup.object().shape({
+  const schema = Yup.object().shape({
     email: Yup.string()
       .required("Alan boş bırakılamaz")
       .email("Geçerli bir mail giriniz"),
@@ -28,151 +26,78 @@ export default function EmployeeAdd() {
     rpassword: Yup.string().required("Lütfen parolayı tekrar giriniz"),
     yearOfBirth: Yup.number().required("Alan boş bırakılamaz"),
   });
+  const initialValues = {
+    email: "",
+    firstName: "",
+    lastName: "",
+    jobPositionId: "",
+    nationaltyId: "",
+    password: "",
+    rpassword: "",
+    yearOfBirth: "",
+  };
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
-      jobPositionId: "",
-      nationaltyId: "",
-      password: "",
-      rpassword: "",
-      yearOfBirth: "",
-    },
-    validationSchema: employeeAddSchema,
-    onSubmit: (values) => {
-      let newEmployee = {
-        email: values.email,
-        firstName: values.firstName,
-        lastName: values.lastName,
-        jobPositionId: values.jobPositionId,
-        nationaltyId: values.nationaltyId,
-        password: values.password,
-        rpassword: values.rpassword,
-        yearOfBirth: values.yearOfBirth,
-      };
-      console.log(newEmployee);
-      let employeeService=new EmployeeService()
-      employeeService.add(newEmployee)
-      toast.success(values.firstName+" Kişisi Eklendi")
-      setTimeout(() => { window.location.reload() }, 4300);
-    },
-  });
   const [jobPositions, setJobPositions] = useState([]);
   useEffect(() => {
     let jobPositionService = new JobPositionService();
-    jobPositionService.getJobPosition().then((result) => setJobPositions(result.data.data));
+    jobPositionService
+      .getJobPosition()
+      .then((result) => setJobPositions(result.data.data));
   }, []);
   const jobPositionOptions = jobPositions.map((jobPosition, index) => ({
     key: index,
     text: jobPosition.name,
     value: jobPosition.id,
   }));
-  const handleChangeSemantic = (value, fieldName) => {
-    formik.setFieldValue(fieldName, value);
+
+  const handleEmployeeValue=(values)=>{
     
-  };
+    return{
+      firstName:values.firstName,
+      lastName:values.lastName,
+      jobPositionId:values.jobPositionId,
+      nationaltyId:values.nationaltyId,
+      email:values.email,
+      password:values.password,
+      rpassword:values.rpassword,
+      yearOfBirth:values.yearOfBirth
+  
+
+    }
+  }
+
   return (
     <div>
-      <Card centered fluid>
-        <Card.Content header="Çalışan Ekleme" />
-        <Card.Content>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Group>
-              <Form.Field width={8}>
-                  <Label color="blue" size={"large"}>İsim</Label>
-                  <Input
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  name="firstName"
-                  />
-              </Form.Field>
-               
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={(values) => {
+          let employeeService=new EmployeeService()
+          employeeService.add(handleEmployeeValue(values))
+          toast.success("İşlem Tamamlandı!")
+          
+      }}>
+        <Form className="ui form" >         
+          <Card centered fluid>
+          <CardContent> <HRMSTextInput name="firstName" placeholder="İsim" /></CardContent>                        
+          <CardContent><HRMSTextInput name="lastName" placeholder="Soyisim" /></CardContent>  
+          <CardContent> <HRMSTextInput name="nationaltyId" placeholder="TC" /></CardContent>      
+          <CardContent> <HRMSTextInput name="email" placeholder="Mail" /></CardContent>
+          <CardContent><HRMSSelect
+              options={jobPositionOptions}
+              name="jobPositionId"
+              placeholder="Pozisyon"
+            /></CardContent>
              
-              <Form.Field width={8}>
-              <Label color="blue" size={"large"}>Soy İsim</Label>
-                  <Input
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  name="lastName"
-                  />
-              </Form.Field>
-            </Form.Group>
-            <Form.Field>
-            <Label color="blue" size={"large"}>TC No</Label>
-                <Input
-                  value={formik.values.nationaltyId}
-                  onChange={formik.handleChange}
-                  name="nationaltyId"
-                  />
-            </Form.Field>
-            <Form.Field>
-            <Label color="blue" size={"large"}>Mail Adresi</Label>
-                <Input
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                name="email"
-
-                />
-            </Form.Field>
-            <Form.Field>
-            <label>Pozisyon</label>
-                <Dropdown
-                  clearable
-                  item
-                  placeholder="Çalışma Süresi"
-                  search
-                  selection
-                  onChange={(event, data) =>
-                    handleChangeSemantic(data.value, "jobPositionId")
-                  }
-                  onBlur={formik.onBlur}
-                  id="jobPositionId"
-                  value={formik.values.jobPositionId}
-                  options={jobPositionOptions}
-                />
-            </Form.Field>
-            <Form.Field>
-            <Label color="blue" size={"large"}>Parola</Label>
-                <Input
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  name="password"
-
-                  />
-            </Form.Field>
-            <Form.Field>
-            <Label color="blue" size={"large"}>Tekrar Parola</Label>
-                <Input
-                  value={formik.values.rpassword}
-                  onChange={formik.handleChange}
-                  name="rpassword"
-                  />
-            </Form.Field>
-            <Form.Field>
-            <Label color="blue" size={"large"}>Doğum Yılı</Label>
-                <Input
-                  value={formik.values.yearOfBirth}
-                  onChange={formik.handleChange}
-                  name="yearOfBirth"
-                  type="number"
-                  />
-            </Form.Field>
-            <Button
-               
-                content="Ekle"
-                labelPosition="right"
-                icon="add"
-                positive
-                type="submit"
-                style={{ marginLeft: "20px" }}
-              />
-            
-          </Form>
-
-        </Card.Content>
-      </Card>
+      <CardContent><HRMSTextInput name="password" placeholder="Parola" /></CardContent> 
+      <CardContent><HRMSTextInput name="rpassword" placeholder="Tekrar Parola" /></CardContent>      
+      <CardContent> <HRMSTextInput name="yearOfBirth" placeholder="Doğum Yılı" /></CardContent>
+            <CardContent> <Button type="submit" icon labelPosition="right" color="green">
+              Ekle<Icon name="add"></Icon>
+            </Button></CardContent>
+          </Card>
+        </Form>
+      </Formik>
     </div>
   );
 }

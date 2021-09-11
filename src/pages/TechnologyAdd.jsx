@@ -25,8 +25,8 @@ export default function TechnologyAdd() {
             }
             let techService=new TechnologyService()
             let employeeId=1
-            console.log(employeeId,newTech)
-            techService.add(employeeId,newTech).then((result)=>console.log(result.message))
+            
+            techService.add(newTech,employeeId)
             toast.success("Teknoloji Eklendi")
             setTimeout(() => { window.location.reload() }, 4300);
             
