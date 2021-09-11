@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory,Link,NavLink } from "react-router-dom";
-import {  Dropdown, Menu, Container, Button,Icon } from "semantic-ui-react";
+import {   Menu, Container, Button,Icon } from "semantic-ui-react";
 import SignedOut from "./SignedOut";
 import SignedIn from "./SignedIn";
 import FavoriteAd from "./FavoriteAd";

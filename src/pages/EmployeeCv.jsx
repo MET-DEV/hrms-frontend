@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Card,Label,Rating,Button } from 'semantic-ui-react'
 import EmployeeCvService from '../services/employeeCvService';
 

@@ -2,8 +2,6 @@ import React from "react";
 import { Route } from "react-router";
 import { Grid } from "semantic-ui-react";
 import JobAd from "../pages/JobAd";
-import City from "../pages/City";
-import JobPosition from "../pages/JobPosition";
 import JobAdDetail from "../pages/JobAdDetail";
 import Employee from "../pages/Employee";
 import JobAdadd from "../pages/JobAdadd";

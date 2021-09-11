@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react';
-import * as Yup from "yup";
 import HeaderAdd from './HeaderAdd';
 import EducationAdd from './EducationAdd';
 import LanguageAdd from './LanguageAdd';

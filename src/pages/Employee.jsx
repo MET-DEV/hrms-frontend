@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, CardDescription, Image } from 'semantic-ui-react'
-import EmployeeService from "../services/employeeService";
+import { Button, Card, Image } from 'semantic-ui-react'
+
 import EmployeeCvService from "../services/employeeCvService";
-import JobPositionService from "../services/jobPositionService";
+
 import { Link } from "react-router-dom";
 
 
