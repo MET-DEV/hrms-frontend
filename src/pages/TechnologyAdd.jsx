@@ -1,76 +1,58 @@
-import { useFormik } from 'formik';
+import { Formik, Form } from 'formik';
 import React from 'react'
 import * as Yup from "yup";
 import {
     Button,
-    Input,
+    Icon,
     Label,
     Card,
-    Form,
+    Grid,
+   
   } from "semantic-ui-react";
 import TechnologyService from '../services/technologyService'
 import { toast } from 'react-toastify';
+import HRMSTextInput from '../utilities/customFormControls/HRMSTextInput';
 export default function TechnologyAdd() {
-    const technologySchema=Yup.object().shape({
+    const schema=Yup.object().shape({
         technologyName:Yup.string().required()
     })
-    const formik=useFormik({
-        initialValues:{
-            technologyName:""
-        },
-        validationSchema:technologySchema,
-        onSubmit:(values)=>{
-            let newTech={
-                technologyName:values.technologyName
-            }
-            let techService=new TechnologyService()
-            let employeeId=1
-            
-            techService.add(newTech,employeeId)
-            toast.success("Teknoloji Eklendi")
-            setTimeout(() => { window.location.reload() }, 4300);
-            
-        }
-
-    })
-    const handleChangeSemantic = (value, fieldName) => {
-        formik.setFieldValue(fieldName, value);
-        
-      };
+    const initialValues={
+      technologyName:""
+  }
+  const handleTech=(values)=>{
+    return {
+      technologyName:values.technologyName
+    }
+  }     
+ 
     return (
         <div>
-             <Card centered fluid>
-             <Card.Content><Label color="teal" size="huge">Teknoloji Ekle</Label></Card.Content>
-        <Card.Content>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Field>
-              <Label color="pink" size="large">Teknoloji Adı</Label>
-              <Input
-                selection
-                placeholder="Teknoloji Adı"
-                onBlur={formik.onBlur}
-                name="technologyName"
-                id="technologyName"
-                value={formik.values.technologyName}
-                onChange={(event, data) =>
-                    handleChangeSemantic(data.value,"technologyName")
-                  }
-                
-              />
-            </Form.Field>
-            
-              <Button
-               
-               content="Ekle"
-               labelPosition="right"
-               icon="add"
-               positive
-               type="submit"
-               style={{ marginLeft: "20px" }}
-             />
-          </Form>
-        </Card.Content>
-      </Card>
+            <Formik
+            initialValues={initialValues}
+            validationSchema={schema}
+            onSubmit={(values)=>{
+              console.log(values)
+              let techService=new TechnologyService()
+              let employeeId=1
+              techService.add(handleTech(values),employeeId)
+              toast.success("Teknoloji Eklendi")
+              setTimeout(() => { window.location.reload() }, 4300);
+            }}>
+
+              <Form className="ui form">
+                <Card centered fluid>
+                  <Grid>
+                    <Grid.Column  width={15}>
+                      <Card.Content><Label size="large" style={{ marginLeft: "30px" }} color="green">Teknoloji</Label><HRMSTextInput style={{ marginLeft: "30px" }} name="technologyName" placeholder="Teknoloji Adı"/></Card.Content>
+                    </Grid.Column>
+                    <Grid.Column  width={16}>  
+                       <Card.Content><Button style={{ marginBottom: "20px" }} type="submit" icon labelPosition="right" color="purple" >Ekle<Icon name="add"></Icon></Button></Card.Content>
+                  </Grid.Column>
+                  </Grid>
+                </Card>
+              </Form>
+
+            </Formik>
         </div>
     )
 }

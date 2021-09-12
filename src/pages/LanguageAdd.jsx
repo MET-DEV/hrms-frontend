@@ -1,95 +1,76 @@
-import { useFormik } from 'formik';
+import { Formik, Form } from 'formik';
 import React from 'react'
 import * as Yup from "yup";
 
 import {
     Button,
-    Input,
+   
     Card,
-    Form,
+    Icon,
     Grid,
     Label
   } from "semantic-ui-react";
+import HRMSTextInput from '../utilities/customFormControls/HRMSTextInput';
 import Language from '../services/languageService';
 import { toast } from 'react-toastify';
 export default function LanguageAdd() {
-    const languageSchema=Yup.object().shape({
+    const schema=Yup.object().shape({
             language:Yup.string().required(),
             languageLevel:Yup.number().required()
 
     })
-    const formik=useFormik({
-        initialValues:{
-            language:"",
-            languageLevel:""
+    const initialValues={
+      language:"",
+      languageLevel:""
 
-        },
-        validationSchema:languageSchema,
-        onSubmit:(values)=>{
-            let newLanguage={
-                language:values.language,
-                languageLevel:values.languageLevel
-            }
-            let languageService=new Language()
-            let employeeId=1
-            languageService.add(employeeId,newLanguage)
-            toast.success("Dil Eklendi")
-            setTimeout(() => { window.location.reload() }, 4300);
+  }
+  const handleLanguage=(values)=>{
+    return {
+      language:values.language,
+      languageLevel:values.languageLevel
+    }
+  }
+  
+   
+      
+        
 
-        }
-    })
+        
+  
     return (
         
         <div>
-            <Card centered fluid>
-            <Card.Content><Label color="teal" size="huge">Dil Ekle</Label></Card.Content>
-        <Card.Content>
-          <Form onSubmit={formik.handleSubmit}>
-            
-            
-            <Form.Field>
-              <Grid stackable>
-                <Grid.Column width={8}>
-                  <Label color="pink" size="large">Dil</Label>
-                  <Input
-                  onBlur={formik.onBlur}
-                    
-                    type="string"
-                    placeholder="Dilin adı"
-                    name="language"
-                    id="language"
-                    onChange={formik.handleChange}
-                    value={formik.values.language}
-                  />
-                </Grid.Column>
-                <Grid.Column width={8}>
-                  <Label color="pink" size="large">Dilin Seviyesi</Label>
-                  <Input
-                  onBlur={formik.onBlur}
-                    type="number"
-                    value={formik.values.languageLevel}
-                    placeholder="Dildeki seviyeniz 5 üzerinden"
-                    name="languageLevel"
-                    id="languageLevel"
-                    onChange={formik.handleChange}
-                    
-                  />
-                </Grid.Column>
-              </Grid>
-              </Form.Field>
-            
-              <Button
-               
-               content="Ekle"
-               labelPosition="right"
-               icon="add"
-               positive
-               type="submit"
-               style={{ marginLeft: "20px" }}
-             />
-          </Form>
-        </Card.Content>
-      </Card>
+           <Formik
+            initialValues={initialValues}
+            validationSchema={schema}
+            onSubmit={(values)=>{
+              console.log(values)
+              let languageService=new Language()
+              let employeeId=1
+              languageService.add(employeeId,handleLanguage(values))
+              toast.success("Dil Eklendi")
+              setTimeout(() => { window.location.reload() }, 4300);
+            }}
+           >
+             <Form className="ui form">
+               <Card centered fluid>
+                 <Grid>
+                 <Grid.Column  width={7}>
+                    <Card.Content><Label style={{ marginLeft: "50px" }}  size="large" color="green">Dil</Label><HRMSTextInput style={{ marginLeft: "50px" }} name="language" placeholder="Dil ismi"/></Card.Content>
+                  </Grid.Column>
+                  <Grid.Column  width={7}>
+                    <Card.Content><Label style={{ marginLeft: "190px" }} size="large" color="green">Dilin Seviyesi</Label><HRMSTextInput style={{ marginLeft: "100px" }}  name="languageLevel" placeholder="5 üzerinden seviyeniz kaç"/></Card.Content>
+                  </Grid.Column>
+                  <Grid.Column  width={16}>  
+                       <Card.Content><Button style={{ marginBottom: "20px" }} type="submit" icon labelPosition="right" color="purple" >Ekle<Icon name="add"></Icon></Button></Card.Content>
+                  </Grid.Column>
+                  
+                 </Grid>
+
+               </Card>
+             </Form>
+
+           </Formik>
         </div>
     )
 }

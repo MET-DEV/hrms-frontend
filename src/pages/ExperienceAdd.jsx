@@ -1,139 +1,82 @@
-import { useFormik } from "formik";
+import { Formik, Form } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import {
   Button,
   Label,
-  Input,
-  TextArea,
+  Icon,
   Card,
-  Form,
+  
   Grid,
 } from "semantic-ui-react";
 import ExperienceService from "../services/experienceService"
 import { toast } from "react-toastify";
+import HRMSTextInput from "../utilities/customFormControls/HRMSTextInput";
+import HRMSTextArea from '../utilities/customFormControls/HRMSTextArea'
 
 export default function ExperienceAdd() {
-  const experienceSchema = Yup.object().shape({
+  const schema = Yup.object().shape({
     completionYear: Yup.number().required(),
     description: Yup.string().required(),
     startYear: Yup.number().required(),
     where: Yup.string().required(),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      completionYear: "",
-      description: "",
-      startYear: "",
-      where: "",
-    },
-    validationSchema: experienceSchema,
-    onSubmit: (values) => {
-      let experience = {
-        completionYear: values.completionYear,
-        description: values.description,
-        startYear: values.startYear,
-        where: values.where,
-      };
-      let experienceService=new ExperienceService()
-      let employeeId=1
-      experienceService.add(experience,employeeId)
-      toast.success("Tecrübe eklendi")
-      setTimeout(() => { window.location.reload() }, 4300);
-    },
-  });
-  const handleChangeSemantic = (value, fieldName) => {
-    formik.setFieldValue(fieldName, value);
-    console.log(value)
-  };
+  const initialValues={
+    completionYear: "",
+    description: "",
+    startYear: "",
+    where: "",
+  }
+
+  const handleExperience=(values)=>{
+    return {
+      completionYear: values.completionYear,
+      description: values.description,
+      startYear: values.startYear,
+      where: values.where,
+    }
+  }
+
   return (
     <div>
-      <Card centered fluid>
-      <Card.Content><Label color="teal" size="huge">Tecrübe Ekle</Label></Card.Content>
-        <Card.Content>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Field>
-            <Label color="blue" size="large">Nerede</Label>
-              <Input
-                selection
-                placeholder="Tecrübe yeri"
-                onBlur={formik.onBlur}
-                name="where"
-                id="where"
-                value={formik.values.where}
-                onChange={(event, data) =>
-                    handleChangeSemantic(data.value,"where")
-                  }
-                
-              />
-            </Form.Field>
-            <Form.Field>
-              <Grid stackable>
-                <Grid.Column width={8}>
-                <Label color="blue" size="large">Başlangıç Yılı</Label>
-                  <Input
-                  onBlur={formik.onBlur}
-                    
-                    type="number"
-                    placeholder="Ne zaman başladınız"
-                    name="startYear"
-                    id="startYear"
-                    onChange={formik.handleChange}
-                    value={formik.values.startYear}
-                  />
-                </Grid.Column>
-                <Grid.Column width={8}>
-                  <Label color="orange" size="large">Bitiş yılı</Label>
-                  <Input
-                  onBlur={formik.onBlur}
-                    type="number"
-                    value={formik.values.completionYear}
-                    placeholder="Ne zaman ayrıldınız"
-                    name="completionYear"
-                    id="completionYear"
-                    onChange={formik.handleChange}
-                    
-                  />
-                </Grid.Column>
-              </Grid>
-            </Form.Field>
-            <Form.Field>
-              <Grid stackable>
-              <Grid.Column width={16}>
-              <Label color="purple" size="large">Açıklama</Label>
-                  <TextArea
-                  
-                  
-                  id="description"
-                  name="description"
-                  onChange={(event,data)=>
-                    handleChangeSemantic(data.value,"description")
-                  }
-                  value={formik.values.description}
-                  onBlur={formik.handleBlur}
-                
-                  placeholder="Açıklama"
-                  
-                  />
+     <Formik
+     initialValues={initialValues}
+     validationSchema={schema}
+     onSubmit={(values)=>{
+      
+      let experienceService=new ExperienceService()
+      let employeeId=1
+      experienceService.add(handleExperience(values),employeeId)
+      toast.success("Tecrübe eklendi")
+      setTimeout(() => { window.location.reload() }, 4300);
+     }}>
+       <Form className="ui form">
+         <Card centered fluid>
+           <Grid>
+            <Grid.Column  width={15}>
+              <Card.Content><Label size="large" color="green">Nerede</Label><HRMSTextInput  name="where" placeholder="Tecrübe Yeri"/></Card.Content>
+            </Grid.Column>
+            <Grid.Column  width={8}>
+              <Card.Content><Label size="large" color="green">Başlangıç</Label><HRMSTextInput  name="startYear" placeholder="Başlama zamanı"/></Card.Content>
+            </Grid.Column>
+            <Grid.Column  width={8}>
+              <Card.Content><Label size="large" color="green">Bitiş</Label><HRMSTextInput  name="completionYear" placeholder="Bitiş zamanı"/></Card.Content>
+            </Grid.Column>
+            <Grid.Column  width={16}>
+              <Card.Content><Label size="large" color="green">Açıklama</Label><HRMSTextArea  name="description" placeholder="Açıklama"/></Card.Content>
+            </Grid.Column>
+          
+            <Grid.Column  width={16}>  
+              <Card.Content><Button style={{ marginBottom: "20px" }} type="submit" icon labelPosition="right" color="purple" >Ekle<Icon name="add"></Icon></Button></Card.Content>
+            </Grid.Column>
+          </Grid>
+         </Card>
 
-              </Grid.Column>
-              </Grid>
-              
-                  
-              </Form.Field>
-              <Button
-               
-               content="Ekle"
-               labelPosition="right"
-               icon="add"
-               positive
-               type="submit"
-               style={{ marginLeft: "20px" }}
-             />
-          </Form>
-        </Card.Content>
-      </Card>
+       </Form>
+
+
+     </Formik>
     </div>
   );
 }

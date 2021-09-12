@@ -123,8 +123,6 @@ export default function LoginEmployeeCv() {
                     
                 ))}
                 
-    
-
                 </Card.Content>
                 <Card.Content><Card.Header>Bağlantılar</Card.Header> 
                 <br/>
