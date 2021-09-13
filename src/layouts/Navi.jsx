@@ -21,7 +21,7 @@ export default function Navi() {
   }
   return (
     <div>
-      <Menu size="large">
+      <Menu  size="large">
       <Container>
           <Link to="/"><Menu.Item name="Ana Sayfa" /></Link>
           <Link to="/employees"><Menu.Item name="Kisiler" /></Link>

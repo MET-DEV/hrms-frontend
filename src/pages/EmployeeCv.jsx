@@ -14,7 +14,7 @@ export default function EmployeeCv() {
     })
     return (
         <div>
-            <Card fluid>
+            <Card centered fluid>
                 <Card.Content><Card.Header>CV</Card.Header></Card.Content>
                 <Card.Content><Card.Header>Ad Soyad</Card.Header> 
                     <Card.Header><Label color="orange" size="huge" style={{ marginTop: "15px" }}>{employeeCv.employee&&employeeCv.employee.firstName} {employeeCv.employee&&employeeCv.employee.lastName}</Label></Card.Header>

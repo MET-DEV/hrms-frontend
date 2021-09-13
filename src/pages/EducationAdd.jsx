@@ -10,6 +10,7 @@ import {
     Card,
   
     Grid,
+    CardHeader,
   } from "semantic-ui-react";
 import EducationService from '../services/educationService';
 import { toast } from 'react-toastify';
@@ -51,6 +52,9 @@ export default function EducationAdd() {
             <Form className="ui form">
               <Card centered fluid>
                 <Grid>
+                
+                  
+                  
 
              
                   <Grid.Column  width={15}>

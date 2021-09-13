@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   CardContent,
+  Label
 } from "semantic-ui-react";
 import HRMSTextInput from "../utilities/customFormControls/HRMSTextInput";
 import { toast } from "react-toastify";
@@ -79,6 +80,7 @@ export default function EmployeeAdd() {
       }}>
         <Form className="ui form" >         
           <Card centered fluid>
+          <Card.Content><Card.Header><Label size="large" color="purple"><Icon name="add"/>İş Arayan Ekleme Sayfası</Label></Card.Header></Card.Content>
           <CardContent> <HRMSTextInput name="firstName" placeholder="İsim" /></CardContent>                        
           <CardContent><HRMSTextInput name="lastName" placeholder="Soyisim" /></CardContent>  
           <CardContent> <HRMSTextInput name="nationaltyId" placeholder="TC" /></CardContent>      
